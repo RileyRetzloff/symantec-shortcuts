@@ -9,14 +9,14 @@ chrome.commands.onCommand.addListener((command) => {
         ) {
             let action = "";
 
-            if (command === "click_back_button") {
-                action = "click_back_button";
-            } else if (command === "next_incident") {
-                action = "next_incident";
-            } else if (command === "previous_incident") {
-                action = "previous_incident";
+            if (command === "dismiss_and_advance") {
+                action = "dismiss_and_advance";
             } else if (command === "download_all_files") {
                 action = "download_all_files";
+            } else if (command === "click_back_button") {
+                action = "click_back_button";
+            } else if (command === "trigger_menu") {
+                action = "openShortcutMenu";
             }
 
             if (action) {

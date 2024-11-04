@@ -20,35 +20,29 @@
         }
     ],
     "commands": {
-        "next_incident": {
+        "dismiss_and_advance": {
             "suggested_key": {
-                "default": "Alt+Shift+N"
+                "default": "Alt+Shift+1"
             },
-            "description": "Go to next incident and download all attachments"
-        },
-        "previous_incident": {
-            "suggested_key": {
-                "default": "Alt+Shift+P"
-            },
-            "description": "Go to previous incident"
+            "description": "Dismiss current incident and advance"
         },
         "download_all_files": {
             "suggested_key": {
-                "default": "Alt+Shift+D"
+                "default": "Alt+Shift+2"
             },
             "description": "Download all files"
         },
         "click_back_button": {
             "suggested_key": {
-                "default": "Alt+Shift+B"
+                "default": "Alt+Shift+3"
             },
             "description": "Click in-page back button"
         },
-        "dismiss_and_advance": {
+        "trigger_menu": {
             "suggested_key": {
-                "default": "Alt+Shift+1"
+                "default": "Alt+Shift+S"
             },
-            "description": "Dismiss current incident, advance, and begin downloading attachments"
+            "description": "Open menu for additional shortcuts"
         }
     },
     "action": {

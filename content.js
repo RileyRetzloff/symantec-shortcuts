@@ -1,15 +1,13 @@
 // Listening for messages from background script
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
-    if (request.action === "next_incident") {
-        nextIncident();
-    } else if (request.action === "previous_incident") {
-        previousIncident();
+    if (request.action === "dismiss_and_advance") {
+        dismissAndAdvance();
     } else if (request.action === "download_all_files") {
         downloadAllFiles();
     } else if (request.action === "click_back_button") {
         clickBackButton();
-    } else if (request.action === "dismiss_and_advance") {
-        dismissAndAdvance();
+    } else if (request.action === "openShortcutMenu") {
+        openShortcutMenu();
     }
 });
 
@@ -41,14 +39,12 @@ function previousIncident() {
 
 // Automating the download of all files in the list with error handling
 function downloadAllFiles() {
-    // Select all <a> elements that have the download attribute
     const fileLinks = document.querySelectorAll("a[download]");
 
     if (fileLinks.length > 0) {
         fileLinks.forEach((fileLink) => {
             const fileName = fileLink.title || fileLink.innerText;
 
-            // Check if the file name contains problematic characters (', or ,)
             if (fileName.includes("'") || fileName.includes(",")) {
                 console.warn(
                     `Warning: File "${fileName}" contains a single quote or comma, which may cause the download to fail.`
@@ -58,7 +54,6 @@ function downloadAllFiles() {
                 );
             }
 
-            // Simulate a click on the file link to start the download
             try {
                 fileLink.click();
                 console.log(`Downloading file: ${fileName}`);
@@ -88,11 +83,8 @@ function setDismissed() {
     statusDropdown.click();
     console.log("Clicked status dropdown");
 
-    // Waiting for the dropdown options to appear in the DOM
     return new Promise((resolve) => {
-        // Giving dropdown time to open and render options
         setTimeout(() => {
-            // Finding Dismiss option by looking for the title attribute
             const dismissOption = document.querySelector(
                 'div[title="Dismissed"]'
             );
@@ -103,7 +95,6 @@ function setDismissed() {
                 return;
             }
 
-            // Finding clickable sibling element and clicking it
             const dismissListItem = dismissOption.previousElementSibling;
 
             if (!dismissListItem) {
@@ -119,9 +110,7 @@ function setDismissed() {
     });
 }
 
-// 1. Calling setDismissed for current incident
-// 2. Setting runDownloadOnLoad flag to "true"
-// 3. Calling nextIncident to navigate to next incident
+// Dismiss current incident and advance
 async function dismissAndAdvance() {
     const statusUpdated = await setDismissed();
 
@@ -131,18 +120,16 @@ async function dismissAndAdvance() {
     }
 
     setTimeout(() => {
-        // Set a flag in local storage or a variable that persists through page reloads
         localStorage.setItem("runDownloadOnLoad", "true");
         nextIncident();
     }, 1000);
 }
 
-// Checking whether runDownloadOnLoad flag set to "true" on page load
+// Checking if download should run on page load
 window.addEventListener("load", () => {
     const shouldRunDownload = localStorage.getItem("runDownloadOnLoad");
 
     if (shouldRunDownload === "true") {
-        // Clear the flag to avoid repeated downloads
         localStorage.removeItem("runDownloadOnLoad");
         console.log("Running downloadAllFiles after page load");
         downloadAllFiles();
@@ -159,4 +146,32 @@ function clickBackButton() {
     } else {
         console.log("Back button not found.");
     }
+}
+
+// Open More Shortcuts menu and wait for user input
+function openShortcutMenu() {
+    console.log(
+        "Shortcut menu activated. Press a number key to choose an action."
+    );
+
+    function handleMenuShortcut(event) {
+        switch (event.key) {
+            case "1":
+                nextIncident();
+                break;
+            case "2":
+                previousIncident();
+                break;
+            case "3":
+                console.log("Additional placeholder action could go here.");
+                break;
+            default:
+                console.log("No action assigned to this key.");
+        }
+        // Remove listener after a valid key press
+        window.removeEventListener("keydown", handleMenuShortcut);
+    }
+
+    // Listen for the next key press to trigger an action
+    window.addEventListener("keydown", handleMenuShortcut);
 }

@@ -1,0 +1,58 @@
+{
+    "manifest_version": 3,
+    "name": "Symantec Shortcuts",
+    "version": "1.0.1",
+    "description": "Automates common operations in Symantec Console using keyboard shortcuts.",
+    "permissions": ["activeTab", "scripting", "commands"],
+    "host_permissions": ["https://dlpconsole-ha.iglbh.tiaa-cref.org/"],
+    "background": {
+        "service_worker": "background.js"
+    },
+    "icons": {
+        "16": "icon16.png",
+        "48": "icon48.png",
+        "128": "icon128.png"
+    },
+    "content_scripts": [
+        {
+            "matches": ["https://dlpconsole-ha.iglbh.tiaa-cref.org/*"],
+            "js": ["content.js"]
+        }
+    ],
+    "commands": {
+        "next_incident": {
+            "suggested_key": {
+                "default": "Alt+Shift+N"
+            },
+            "description": "Go to next incident and download all attachments"
+        },
+        "previous_incident": {
+            "suggested_key": {
+                "default": "Alt+Shift+P"
+            },
+            "description": "Go to previous incident"
+        },
+        "download_all_files": {
+            "suggested_key": {
+                "default": "Alt+Shift+D"
+            },
+            "description": "Download all files"
+        },
+        "click_back_button": {
+            "suggested_key": {
+                "default": "Alt+Shift+B"
+            },
+            "description": "Click in-page back button"
+        },
+        "dismiss_and_advance": {
+            "suggested_key": {
+                "default": "Alt+Shift+1"
+            },
+            "description": "Dismiss current incident, advance, and begin downloading attachments"
+        }
+    },
+    "action": {
+        "default_popup": "shortcuts.html",
+        "default_icon": "icon128.png"
+    }
+}

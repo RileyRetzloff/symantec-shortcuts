@@ -148,12 +148,118 @@ function clickBackButton() {
     }
 }
 
-// Open More Shortcuts menu and wait for user input
+// Function to create and display the "More Shortcuts" menu overlay
 function openShortcutMenu() {
     console.log(
         "Shortcut menu activated. Press a number key to choose an action."
     );
 
+    // Create overlay container
+    const overlay = document.createElement("div");
+    overlay.style.position = "fixed";
+    overlay.style.top = "0";
+    overlay.style.left = "0";
+    overlay.style.width = "100%";
+    overlay.style.height = "100%";
+    overlay.style.backgroundColor = "rgba(0, 0, 0, 0.5)";
+    overlay.style.display = "flex";
+    overlay.style.alignItems = "center";
+    overlay.style.justifyContent = "center";
+    overlay.style.zIndex = "1000";
+
+    // Create menu box
+    const menuBox = document.createElement("div");
+    menuBox.style.backgroundColor = "#f5f5f5";
+    menuBox.style.padding = "20px";
+    menuBox.style.borderRadius = "8px";
+    menuBox.style.boxShadow = "0 4px 8px rgba(0, 0, 0, 0.2)";
+    menuBox.style.fontFamily = "'IBM Plex Mono', monospace";
+    menuBox.style.minWidth = "300px";
+    menuBox.style.position = "relative";
+
+    // Title
+    const title = document.createElement("h2");
+    title.innerText = "More Shortcuts";
+    title.style.color = "#4a4057";
+    title.style.marginBottom = "16px";
+    menuBox.appendChild(title);
+
+    // Instructional Text
+    const instructions = document.createElement("p");
+    instructions.innerText = "Press a number key or Escape to close";
+    instructions.style.color = "#888";
+    instructions.style.fontSize = "12px";
+    instructions.style.fontStyle = "italic";
+    instructions.style.marginBottom = "16px";
+    menuBox.appendChild(instructions);
+
+    // Close button (X)
+    const closeButton = document.createElement("span");
+    closeButton.innerText = "X";
+    closeButton.style.position = "absolute";
+    closeButton.style.top = "10px";
+    closeButton.style.right = "10px";
+    closeButton.style.cursor = "pointer";
+    closeButton.style.color = "#666";
+    closeButton.style.fontSize = "14px";
+    closeButton.onclick = () => closeMenu();
+    menuBox.appendChild(closeButton);
+
+    // Shortcut rows
+    const shortcuts = [
+        { key: "1", description: "Next Incident" },
+        { key: "2", description: "Previous Incident" },
+        { key: "3", description: "Placeholder Action" },
+    ];
+
+    shortcuts.forEach((shortcut) => {
+        const row = document.createElement("div");
+        row.className = "shortcut-row";
+        row.style.display = "flex";
+        row.style.alignItems = "center";
+        row.style.marginBottom = "12px";
+
+        const keyElem = document.createElement("span");
+        keyElem.className = "key character";
+        keyElem.innerText = shortcut.key;
+        keyElem.style.background =
+            "linear-gradient(to bottom, #c2b5dd 0%, #b3a4d4 100%)";
+        keyElem.style.color = "#4a4057";
+        keyElem.style.marginRight = "8px";
+        keyElem.style.padding = "6px 10px";
+        keyElem.style.borderRadius = "4px";
+        keyElem.style.fontWeight = "500";
+
+        const descriptionElem = document.createElement("span");
+        descriptionElem.innerText = shortcut.description;
+        descriptionElem.style.color = "#444";
+
+        row.appendChild(keyElem);
+        row.appendChild(descriptionElem);
+        menuBox.appendChild(row);
+    });
+
+    // Append menuBox to overlay
+    overlay.appendChild(menuBox);
+    document.body.appendChild(overlay);
+
+    // Function to close the menu
+    function closeMenu() {
+        document.body.removeChild(overlay);
+        window.removeEventListener("keydown", handleMenuShortcut);
+        window.removeEventListener("keydown", closeOnEscape);
+    }
+
+    // Close menu on Escape key
+    function closeOnEscape(event) {
+        if (event.key === "Escape") {
+            closeMenu();
+        }
+    }
+
+    window.addEventListener("keydown", closeOnEscape);
+
+    // Handle number key shortcuts for menu actions
     function handleMenuShortcut(event) {
         switch (event.key) {
             case "1":
@@ -163,15 +269,14 @@ function openShortcutMenu() {
                 previousIncident();
                 break;
             case "3":
-                console.log("Additional placeholder action could go here.");
+                console.log("Placeholder action triggered");
                 break;
             default:
                 console.log("No action assigned to this key.");
         }
-        // Remove listener after a valid key press
-        window.removeEventListener("keydown", handleMenuShortcut);
+        closeMenu();
     }
 
-    // Listen for the next key press to trigger an action
+    // Listen for a number key press to trigger an action
     window.addEventListener("keydown", handleMenuShortcut);
 }

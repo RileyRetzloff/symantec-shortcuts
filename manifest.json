@@ -40,9 +40,9 @@
         },
         "trigger_menu": {
             "suggested_key": {
-                "default": "Alt+Shift+S"
+                "default": "Alt+Shift+4"
             },
-            "description": "Open menu for additional shortcuts"
+            "description": "Advance to next incident"
         }
     },
     "action": {

@@ -15,8 +15,8 @@ chrome.commands.onCommand.addListener((command) => {
                 action = "download_all_files";
             } else if (command === "click_back_button") {
                 action = "click_back_button";
-            } else if (command === "trigger_menu") {
-                action = "openShortcutMenu";
+            } else if (command === "next_incident") {
+                action = "next_incident";
             }
 
             if (action) {

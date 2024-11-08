@@ -24,25 +24,25 @@
             "suggested_key": {
                 "default": "Alt+Shift+1"
             },
-            "description": "Dismiss current incident and advance"
+            "description": "Dismiss current incident, advance to next, & begin downloading attachments"
         },
         "download_all_files": {
             "suggested_key": {
                 "default": "Alt+Shift+2"
             },
-            "description": "Download all files"
+            "description": "Next incident"
         },
         "click_back_button": {
             "suggested_key": {
                 "default": "Alt+Shift+3"
             },
-            "description": "Click in-page back button"
+            "description": "Download attachments in current incident"
         },
         "trigger_menu": {
             "suggested_key": {
                 "default": "Alt+Shift+4"
             },
-            "description": "Advance to next incident"
+            "description": "Back to previous page"
         }
     },
     "action": {

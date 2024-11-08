@@ -120,16 +120,20 @@ async function dismissAndAdvance() {
     setTimeout(() => {
         localStorage.setItem("runDownloadOnLoad", "true");
         nextIncident();
-    }, 1000);
+    }, 500);
 }
 
-// Checking if download should run on page load
+// Checking if download should run on page load with a delay
 window.addEventListener("load", () => {
     const shouldRunDownload = localStorage.getItem("runDownloadOnLoad");
 
     if (shouldRunDownload === "true") {
         localStorage.removeItem("runDownloadOnLoad");
-        console.log("Running downloadAllFiles after page load");
-        downloadAllFiles();
+        console.log("Waiting briefly before running downloadAllFiles...");
+
+        // Introduce a delay before calling downloadAllFiles
+        setTimeout(() => {
+            downloadAllFiles();
+        }, 1000); // Adjust the delay time if necessary (e.g., 1000ms)
     }
 });

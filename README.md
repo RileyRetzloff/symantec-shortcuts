@@ -2,6 +2,8 @@
 
 ### Priority TODOs
 
+-   downloadAllFiles() is reachable, but doesn't always engage
+
 ### Other TODOs
 
 -   speed up downloadAllIncidents implementation (all files download at once?)

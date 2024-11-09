@@ -11,12 +11,12 @@ chrome.commands.onCommand.addListener((command) => {
 
             if (command === "dismiss_advance_download") {
                 action = "dismiss_advance_download";
+            } else if (command === "next_incident") {
+                action = "next_incident";
             } else if (command === "download_all_files") {
                 action = "download_all_files";
             } else if (command === "click_back_button") {
                 action = "click_back_button";
-            } else if (command === "next_incident") {
-                action = "next_incident";
             }
 
             if (action) {

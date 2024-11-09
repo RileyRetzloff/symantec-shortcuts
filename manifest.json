@@ -26,23 +26,23 @@
             },
             "description": "Dismiss current incident, advance to next, & begin downloading attachments"
         },
-        "download_all_files": {
+        "next_incident": {
             "suggested_key": {
                 "default": "Alt+Shift+2"
             },
-            "description": "Download all files in current incident"
+            "description": "Next incident"
         },
-        "click_back_button": {
+        "download_all_files": {
             "suggested_key": {
                 "default": "Alt+Shift+3"
             },
-            "description": "Back to previous page"
+            "description": "Download attachments in current incident"
         },
-        "next_incident": {
+        "click_back_button": {
             "suggested_key": {
                 "default": "Alt+Shift+4"
             },
-            "description": "Next incident"
+            "description": "Back to previous page"
         }
     },
     "action": {

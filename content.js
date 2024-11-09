@@ -2,26 +2,14 @@
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     if (request.action === "dismiss_advance_download") {
         dismissAdvanceDownload();
+    } else if (request.action === "next_incident") {
+        nextIncident();
     } else if (request.action === "download_all_files") {
         downloadAllFiles();
     } else if (request.action === "click_back_button") {
         clickBackButton();
-    } else if (request.action === "next_incident") {
-        nextIncident();
     }
 });
-
-// Automating "Back" button click
-function clickBackButton() {
-    const backButton = document.querySelector("a.back-button");
-
-    if (backButton) {
-        backButton.click();
-        console.log("Back button clicked!");
-    } else {
-        console.log("Back button not found.");
-    }
-}
 
 // Automating "Next Incident" button click
 function nextIncident() {
@@ -32,6 +20,18 @@ function nextIncident() {
         console.log("Next Incident button clicked!");
     } else {
         console.log("Next Incident button not found.");
+    }
+}
+
+// Automating "Back" button click
+function clickBackButton() {
+    const backButton = document.querySelector("a.back-button");
+
+    if (backButton) {
+        backButton.click();
+        console.log("Back button clicked!");
+    } else {
+        console.log("Back button not found.");
     }
 }
 

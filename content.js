@@ -1,7 +1,7 @@
 // Listening for messages from background script
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
-    if (request.action === "dismiss_and_advance") {
-        dismissAndAdvance();
+    if (request.action === "dismiss_advance_download") {
+        dismissAdvanceDownload();
     } else if (request.action === "download_all_files") {
         downloadAllFiles();
     } else if (request.action === "click_back_button") {
@@ -108,8 +108,8 @@ function setDismissed() {
     });
 }
 
-// Dismiss current incident and advance
-async function dismissAndAdvance() {
+// Dismiss current incident, advance to next, & begin downloading attachments
+async function dismissAdvanceDownload() {
     const statusUpdated = await setDismissed();
 
     if (!statusUpdated) {

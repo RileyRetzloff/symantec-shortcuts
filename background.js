@@ -9,8 +9,8 @@ chrome.commands.onCommand.addListener((command) => {
         ) {
             let action = "";
 
-            if (command === "dismiss_and_advance") {
-                action = "dismiss_and_advance";
+            if (command === "dismiss_advance_download") {
+                action = "dismiss_advance_download";
             } else if (command === "download_all_files") {
                 action = "download_all_files";
             } else if (command === "click_back_button") {

@@ -20,7 +20,7 @@
         }
     ],
     "commands": {
-        "dismiss_and_advance": {
+        "dismiss_advance_download": {
             "suggested_key": {
                 "default": "Alt+Shift+1"
             },
@@ -30,19 +30,19 @@
             "suggested_key": {
                 "default": "Alt+Shift+2"
             },
-            "description": "Next incident"
+            "description": "Download all files in current incident"
         },
         "click_back_button": {
             "suggested_key": {
                 "default": "Alt+Shift+3"
             },
-            "description": "Download attachments in current incident"
+            "description": "Back to previous page"
         },
-        "trigger_menu": {
+        "next_incident": {
             "suggested_key": {
                 "default": "Alt+Shift+4"
             },
-            "description": "Back to previous page"
+            "description": "Next incident"
         }
     },
     "action": {

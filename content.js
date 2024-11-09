@@ -35,33 +35,119 @@ function clickBackButton() {
     }
 }
 
-// Automating the download of all files in the list with error handling
-function downloadAllFiles() {
-    const fileLinks = document.querySelectorAll("a[download]");
+// // Automating the download of all files in the list with error handling
+// // TODO: Deprecate if new version
+// function downloadAllFiles() {
+//     const fileLinks = document.querySelectorAll("a[download]");
+
+//     if (fileLinks.length > 0) {
+//         fileLinks.forEach((fileLink) => {
+//             const fileName = fileLink.title || fileLink.innerText;
+
+//             if (fileName.includes("'") || fileName.includes(",")) {
+//                 console.warn(
+//                     `Warning: File "${fileName}" contains a single quote (') or comma (,), which may cause the download to fail.`
+//                 );
+//                 alert(
+//                     `The file "${fileName}" contains a single quote (') or comma (,) and may not download correctly. Please download it manually if needed.`
+//                 );
+//             }
+
+//             try {
+//                 fileLink.click();
+//                 console.log(`Downloading file: ${fileName}`);
+//             } catch (error) {
+//                 console.error(`Failed to download file: ${fileName}`, error);
+//                 alert(
+//                     `Failed to download the file "${fileName}". Please download it manually.`
+//                 );
+//             }
+//         });
+//     } else {
+//         console.log("No files found for download.");
+//     }
+// }
+
+// // BETA - UN-COMMENT ABOVE VERSION AND COMMENT OUT THIS ONE IF NON-FUNCTIONAL
+// // Automating the download of all files in the list with error handling
+// function downloadAllFiles() {
+//     const fileLinks = document.querySelectorAll("a[download]");
+//     const problematicFiles = [];
+
+//     if (fileLinks.length > 0) {
+//         fileLinks.forEach((fileLink) => {
+//             const fileName = fileLink.title || fileLink.innerText;
+
+//             if (fileName.includes("'") || fileName.includes(",")) {
+//                 problematicFiles.push(fileName); // Collect problematic filenames
+//             }
+
+//             try {
+//                 fileLink.click();
+//                 console.log(`Downloading file: ${fileName}`);
+//             } catch (error) {
+//                 console.error(`Failed to download file: ${fileName}`, error);
+//                 alert(
+//                     `Failed to download the file "${fileName}". Please download it manually.`
+//                 );
+//             }
+//         });
+
+//         // Show a single alert if there are problematic files
+//         if (problematicFiles.length > 0) {
+//             alert(
+//                 `The following files contain single quotes or commas, which may cause download issues:\n\n${problematicFiles.join(
+//                     "\n"
+//                 )}\n\nPlease download these manually if needed.`
+//             );
+//         }
+//     } else {
+//         console.log("No files found for download.");
+//     }
+// }
+
+// ADVANCED BETA - UN-COMMENT ABOVE VERSION AND COMMENT OUT THIS ONE IF NON-FUNCTIONAL
+// Optimized function to download all files in the list with error handling
+async function downloadAllFiles() {
+    const fileLinks = Array.from(document.querySelectorAll("a[download]"));
+    const problematicFiles = [];
 
     if (fileLinks.length > 0) {
-        fileLinks.forEach((fileLink) => {
+        // Map each file download into a promise for simultaneous processing
+        const downloadPromises = fileLinks.map((fileLink) => {
             const fileName = fileLink.title || fileLink.innerText;
 
+            // Track problematic files for a single alert
             if (fileName.includes("'") || fileName.includes(",")) {
-                console.warn(
-                    `Warning: File "${fileName}" contains a single quote (') or comma (,), which may cause the download to fail.`
-                );
-                alert(
-                    `The file "${fileName}" contains a single quote (') or comma (,) and may not download correctly. Please download it manually if needed.`
-                );
+                problematicFiles.push(fileName);
             }
 
-            try {
-                fileLink.click();
-                console.log(`Downloading file: ${fileName}`);
-            } catch (error) {
-                console.error(`Failed to download file: ${fileName}`, error);
-                alert(
-                    `Failed to download the file "${fileName}". Please download it manually.`
-                );
-            }
+            return new Promise((resolve, reject) => {
+                try {
+                    fileLink.click();
+                    console.log(`Downloading file: ${fileName}`);
+                    resolve(fileName);
+                } catch (error) {
+                    console.error(
+                        `Failed to download file: ${fileName}`,
+                        error
+                    );
+                    reject(fileName);
+                }
+            });
         });
+
+        // Wait for all downloads to attempt completion
+        await Promise.allSettled(downloadPromises);
+
+        // Show a single alert if there are problematic files
+        if (problematicFiles.length > 0) {
+            alert(
+                `The following files contain single quotes or commas, which may cause download issues:\n\n${problematicFiles.join(
+                    "\n"
+                )}\n\nPlease download these manually if needed.`
+            );
+        }
     } else {
         console.log("No files found for download.");
     }

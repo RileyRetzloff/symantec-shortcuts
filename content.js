@@ -131,9 +131,8 @@ window.addEventListener("load", () => {
         localStorage.removeItem("runDownloadOnLoad");
         console.log("Waiting briefly before running downloadAllFiles...");
 
-        // Introduce a delay before calling downloadAllFiles
         setTimeout(() => {
             downloadAllFiles();
-        }, 1000); // Adjust the delay time if necessary (e.g., 1000ms)
+        }, 1000); // Adjust the delay time if necessary
     }
 });
